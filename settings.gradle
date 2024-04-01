@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FinalProjectRxJava"
+rootProject.name = "FinalProjectReactor"
 include ':app'
 include ':core'
 include ':benchmark'
