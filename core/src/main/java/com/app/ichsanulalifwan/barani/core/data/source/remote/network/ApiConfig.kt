@@ -1,9 +1,11 @@
 package com.app.ichsanulalifwan.barani.core.data.source.remote.network
 
 import android.content.Context
+import com.app.ichsanulalifwan.barani.core.data.source.remote.network.reactor.ReactorNewsApiService
 import com.app.ichsanulalifwan.barani.core.data.source.remote.network.rxjava.RxJavaNewsApiService
 import com.app.ichsanulalifwan.barani.core.mock.MockInterceptor
 import com.app.ichsanulalifwan.barani.core.utils.Constant.BASE_URL
+import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,7 +33,8 @@ object ApiConfig {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+            .addCallAdapterFactory(ReactorCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
     }
@@ -47,6 +50,13 @@ object ApiConfig {
         val client = createHttpClient(mockInterceptor)
         val retrofit = createRetrofit(client)
         return retrofit.create(RxJavaNewsApiService::class.java)
+    }
+
+    fun getMockBenchmarkApiService(context: Context): ReactorNewsApiService {
+        val mockInterceptor = MockInterceptor(context = context)
+        val client = createHttpClient(mockInterceptor)
+        val retrofit = createRetrofit(client)
+        return retrofit.create(ReactorNewsApiService::class.java)
     }
 
 }

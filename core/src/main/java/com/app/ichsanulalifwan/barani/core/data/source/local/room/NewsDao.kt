@@ -8,7 +8,6 @@ import com.app.ichsanulalifwan.barani.core.data.source.local.entity.NewsEntity
 import com.app.ichsanulalifwan.barani.core.data.source.local.entity.PublisherEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsDao {
@@ -39,33 +38,6 @@ interface NewsDao {
     @Query("DELETE FROM publisher_entities")
     fun deletePublisherAsCompletable(): Completable
 
-
-    /* Kotlin FLow */
-
-    /**
-     * Load data.
-     */
-    @Query("SELECT * FROM news_entities")
-    fun allNewsByFlow(): Flow<List<NewsEntity>>
-
-    @Query("SELECT * FROM publisher_entities")
-    fun allPublisherByFlow(): Flow<List<PublisherEntity>>
-
-    /**
-     * Insert data.
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNews(newsEntities: List<NewsEntity>)
-
-    @Query("DELETE FROM news_entities")
-    suspend fun deleteAllNews()
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPublisher(publisherEntities: List<PublisherEntity>)
-
-    @Query("DELETE FROM publisher_entities")
-    suspend fun deleteAllPublishers()
-
     /* Reactor */
 
     /**
@@ -81,14 +53,14 @@ interface NewsDao {
      * Insert data.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNewsAsMono(newsEntities: List<NewsEntity>): Completable
+    fun insertNews(newsEntities: List<NewsEntity>): Completable
 
     @Query("DELETE FROM news_entities")
-    fun deleteAllNewsAsMono(): Completable
+    fun deleteAllNews(): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPublisherAsMono(publisherEntities: List<PublisherEntity>): Completable
+    fun insertPublisher(publisherEntities: List<PublisherEntity>): Completable
 
     @Query("DELETE FROM publisher_entities")
-    fun deleteAllPublishersAsMono(): Completable
+    fun deleteAllPublishers(): Completable
 }
