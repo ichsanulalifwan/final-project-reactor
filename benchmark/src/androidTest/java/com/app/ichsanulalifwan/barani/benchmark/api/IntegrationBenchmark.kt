@@ -14,7 +14,4 @@ interface IntegrationBenchmark {
 
     @Test
     fun integration4()
-
-    @Test
-    fun integrationFlowable()
 }
