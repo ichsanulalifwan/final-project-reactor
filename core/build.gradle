@@ -44,6 +44,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+    implementation "com.jakewharton.retrofit:retrofit2-reactor-adapter:$reactor_adapter"
 
     // Room
     api "androidx.room:room-runtime:$room_version"
@@ -59,11 +60,9 @@ dependencies {
     api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     api "androidx.lifecycle:lifecycle-reactivestreams:$reactivestreams_version"
 
-    // Kotlin Flow
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_flow_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow_version"
-
     // Reactor
-    implementation "io.projectreactor:reactor-core:$reactor_core_version"
-    implementation "io.projectreactor.kotlin:reactor-kotlin-extensions:$reactor_ktx_version"
+    api "io.projectreactor:reactor-core:$reactor_core_version"
+    api "io.projectreactor.kotlin:reactor-kotlin-extensions:$reactor_ktx_version"
+    api "io.projectreactor.addons:reactor-adapter:$reactor_addons_version"
+
 }

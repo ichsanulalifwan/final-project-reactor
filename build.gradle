@@ -34,6 +34,7 @@ buildscript {
         // Networking
         retrofit2_version = '2.9.0'
         okhttp3_version = '4.9.2'
+        reactor_adapter = '2.1.0'
 
         // Room
         room_version = '2.5.0'
@@ -56,12 +57,10 @@ buildscript {
         rxandroid_version = '2.1.1'
         reactivestreams_version = '2.6.2'
 
-        // Kotlin Flow
-        kotlin_flow_version = '1.6.4'
-
         // Reactor
         reactor_core_version = '3.6.2'
         reactor_ktx_version = '1.2.2'
+        reactor_addons_version = '3.5.1'
 
         // testing
         androidx_test_version = '1.5.2'
