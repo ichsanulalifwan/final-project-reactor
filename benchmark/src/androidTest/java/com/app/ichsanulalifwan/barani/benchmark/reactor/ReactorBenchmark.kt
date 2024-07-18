@@ -13,7 +13,7 @@ import org.junit.Rule
 open class ReactorBenchmark {
 
     protected val remoteDataSource: ReactorNewsApiService by lazy {
-        ApiConfig.getMockBenchmarkApiService(context = context)
+        ApiConfig.getMockApiService(context = context)
     }
 
     protected val localDataSource: NewsDao by lazy {

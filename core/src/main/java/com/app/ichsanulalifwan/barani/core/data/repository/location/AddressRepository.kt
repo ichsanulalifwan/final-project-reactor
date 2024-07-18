@@ -14,11 +14,17 @@ class AddressRepository(context: Context, val isMock: Boolean) {
         longitude: Double,
         latitude: Double,
         maxResults: Int,
-        block: (List<Address>?, Throwable?) -> Unit
+        block: (List<Address>?, Throwable?) -> Unit,
     ) {
         try {
             val mockAddress = Address(Locale.US).apply { countryCode = US_COUNTRY_CODE }
-            block(if (isMock) listOf(mockAddress) else geoCoder.getFromLocation(latitude, longitude, maxResults), null)
+            block(
+                if (isMock) listOf(mockAddress) else geoCoder.getFromLocation(
+                    latitude,
+                    longitude,
+                    maxResults,
+                ), null
+            )
         } catch (t: Throwable) {
             block(null, t)
         }

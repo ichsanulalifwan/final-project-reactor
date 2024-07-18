@@ -12,32 +12,6 @@ import io.reactivex.Flowable
 @Dao
 interface NewsDao {
 
-    /* RxJava */
-
-    /**
-     * Load data.
-     */
-    @Query("SELECT * FROM news_entities")
-    fun allNewsByFlowable(): Flowable<List<NewsEntity>>
-
-    @Query("SELECT * FROM publisher_entities")
-    fun allPublisherByFlowable(): Flowable<List<PublisherEntity>>
-
-    /**
-     * Insert data.
-     */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNewsAsCompletable(newsEntities: List<NewsEntity>): Completable
-
-    @Query("DELETE FROM news_entities")
-    fun deleteNewsAsCompletable(): Completable
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPublisherAsCompletable(publisherEntities: List<PublisherEntity>): Completable
-
-    @Query("DELETE FROM publisher_entities")
-    fun deletePublisherAsCompletable(): Completable
-
     /* Reactor */
 
     /**

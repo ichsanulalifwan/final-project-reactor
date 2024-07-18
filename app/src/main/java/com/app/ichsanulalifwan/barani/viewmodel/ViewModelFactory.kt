@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.app.ichsanulalifwan.barani.core.data.repository.location.AddressRepository
-import com.app.ichsanulalifwan.barani.core.data.repository.news.rxjava.RxJavaNewsRepository
+import com.app.ichsanulalifwan.barani.core.data.repository.news.reactor.ReactorNewsRepository
 import com.app.ichsanulalifwan.barani.core.di.Injection
 import com.app.ichsanulalifwan.barani.ui.beranda.BerandaViewModel
 import com.app.ichsanulalifwan.barani.ui.list.ListViewModel
@@ -14,7 +14,7 @@ import com.app.ichsanulalifwan.barani.ui.report.ReportViewModel
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(
     private val application: Application,
-    private val newsRepository: RxJavaNewsRepository,
+    private val newsRepository: ReactorNewsRepository,
     private val addressRepository: AddressRepository,
 ) :
     ViewModelProvider.NewInstanceFactory() {
@@ -24,11 +24,19 @@ class ViewModelFactory private constructor(
         return when {
 
             modelClass.isAssignableFrom(BerandaViewModel::class.java) -> {
-                BerandaViewModel(application, newsRepository) as T
+                BerandaViewModel(
+                    application,
+                    newsRepository = newsRepository,
+                    addressRepository = addressRepository,
+                ) as T
             }
 
             modelClass.isAssignableFrom(ListViewModel::class.java) -> {
-                ListViewModel(application, newsRepository) as T
+                ListViewModel(
+                    application,
+                    newsRepository = newsRepository,
+                    addressRepository = addressRepository,
+                ) as T
             }
 
             modelClass.isAssignableFrom(ProfilViewModel::class.java) -> {

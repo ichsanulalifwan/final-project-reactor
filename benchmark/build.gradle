@@ -27,6 +27,13 @@ android {
 
         testInstrumentationRunner 'androidx.benchmark.junit4.AndroidBenchmarkRunner'
         testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
+
+        // Set this argument to capture profiling information, instead of measuring performance.
+        // Can be one of:
+        //   * None
+        //   * StackSampling
+        //   * MethodTracing
+        // See full descriptions of available options at: d.android.com/benchmark#profiling
         testInstrumentationRunnerArguments["androidx.benchmark.profiling.mode"] = "StackSampling"
     }
 
@@ -43,6 +50,10 @@ android {
             isDefault = true
         }
     }
+
+
+    // Enable the benchmark to run separately from the app process
+    experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 
 dependencies {

@@ -1,13 +1,13 @@
 package com.app.ichsanulalifwan.barani.core.di
 
 import android.content.Context
-import com.app.ichsanulalifwan.barani.core.data.repository.news.rxjava.RxJavaNewsRepository
+import com.app.ichsanulalifwan.barani.core.data.repository.news.reactor.ReactorNewsRepository
 import com.app.ichsanulalifwan.barani.core.data.source.local.room.AppDatabase
 import com.app.ichsanulalifwan.barani.core.data.source.remote.network.ApiConfig
 
 object Injection {
 
-    fun provideRepository(context: Context, isMock: Boolean): RxJavaNewsRepository {
+    fun provideRepository(context: Context, isMock: Boolean): ReactorNewsRepository {
 
         val database = AppDatabase.getInstance(context = context.applicationContext)
         val newsDao = database.newsDao()
@@ -15,7 +15,7 @@ object Injection {
             ApiConfig.getApiService()
         } else ApiConfig.getMockApiService(context = context)
 
-        return RxJavaNewsRepository.getInstance(
+        return ReactorNewsRepository.getInstance(
             remoteDataSource = remoteDataSource,
             localDataSource = newsDao,
         )

@@ -5,38 +5,48 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.toLiveData
 import com.app.ichsanulalifwan.barani.core.R
-import com.app.ichsanulalifwan.barani.core.data.repository.news.rxjava.RxJavaNewsRepository
+import com.app.ichsanulalifwan.barani.core.data.repository.location.AddressRepository
+import com.app.ichsanulalifwan.barani.core.data.repository.news.reactor.ReactorNewsRepository
 import com.app.ichsanulalifwan.barani.core.model.News
 import com.app.ichsanulalifwan.barani.core.model.Publisher
 import com.app.ichsanulalifwan.barani.core.utils.DataMapper
 import com.app.ichsanulalifwan.barani.core.viewmodel.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.app.ichsanulalifwan.barani.utils.Constant.HEALTH_CATEGORY
+import com.app.ichsanulalifwan.barani.utils.Constant.US_COUNTRY_CODE
+import reactor.core.Disposable
+import reactor.core.Disposables
+import reactor.core.scheduler.Schedulers
 
 class ListViewModel(
     application: Application,
-    private val rxJavaNewsRepository: RxJavaNewsRepository,
+    private val newsRepository: ReactorNewsRepository,
+    private val addressRepository: AddressRepository,
 ) : BaseViewModel(application) {
 
-    private val disposableBag = CompositeDisposable()
+    private var disposable = Disposables.composite()
+    private var locationDisposable: Disposable? = null
 
-    override fun getNews(): LiveData<List<News>> = rxJavaNewsRepository.news
+    init {
+        getTopHeadlineNews()
+    }
+
+    override fun getNews(): LiveData<List<News>> = newsRepository.news
         .map { entityList ->
             DataMapper.mapNewsEntityToModel(entityList)
         }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.boundedElastic())
         .toLiveData()
 
-    override fun getPublishers(): LiveData<List<Publisher>> {
-        TODO("Not yet implemented")
-    }
+    override fun getPublishers(): LiveData<List<Publisher>> = newsRepository.publishers
+        .map { entityList ->
+            DataMapper.mapPublisherListToModel(entityList)
+        }
+        .toLiveData()
 
     override fun getTopHeadlineNews() {
         startTopHeadlinesNewsTimer()
-        rxJavaNewsRepository.getTopHeadlineNews("us", "health")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        newsRepository.getTopHeadlineNews(US_COUNTRY_CODE, HEALTH_CATEGORY)
+            .subscribeOn(Schedulers.boundedElastic())
             .doOnSubscribe { isLoading.value = true }
             .doFinally {
                 stopTopHeadlinesNewsTimer()
@@ -48,11 +58,30 @@ class ListViewModel(
                     message.value = context.getString(R.string.news_error)
                     Log.e(LOG_TAG, "Could not fetch news", throwable)
                 }
-            ).also { disposableBag.add(it) }
+            ).also { disposable.add(it) }
     }
 
     override fun getNewsPublisher() {
-        TODO("Not yet implemented")
+        startSourcesNewsTimer()
+
+        newsRepository.getNewsPublisher()
+            .subscribeOn(Schedulers.boundedElastic())
+            .publishOn(Schedulers.single())
+            .doOnSubscribe { isLoading.value = true }
+            .doFinally {
+                stopSourcesNewsTimer()
+                isLoading.value = false
+            }
+            .subscribe(
+                { isLocalNews.value = false },
+                { throwable ->
+                    message.value = context.getString(R.string.news_error)
+                    Log.e(LOG_TAG, "Could not fetch publisher", throwable)
+                }
+            )
+            .also {
+                disposable.add(it)
+            }
     }
 
     override fun startUpdatesForTopHeadlineNewsLocal() {
@@ -60,6 +89,11 @@ class ListViewModel(
     }
 
     override fun cancelUpdatesForTopHeadlineNewsLocal() {
-        TODO("Not yet implemented")
+        locationDisposable?.dispose()
+    }
+
+    override fun onCleared() {
+        disposable.dispose()
+        super.onCleared()
     }
 }

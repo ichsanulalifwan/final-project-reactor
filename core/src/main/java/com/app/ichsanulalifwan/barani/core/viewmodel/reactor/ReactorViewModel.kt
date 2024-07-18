@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.toLiveData
 import com.app.ichsanulalifwan.barani.core.R
-import com.app.ichsanulalifwan.barani.core.data.location.reactor.getAddresses
-import com.app.ichsanulalifwan.barani.core.data.location.reactor.getLocationUpdates
+import com.app.ichsanulalifwan.barani.core.data.location.getAddresses
+import com.app.ichsanulalifwan.barani.core.data.location.getLocationUpdates
 import com.app.ichsanulalifwan.barani.core.data.repository.location.AddressRepository
 import com.app.ichsanulalifwan.barani.core.data.repository.news.reactor.ReactorNewsRepository
 import com.app.ichsanulalifwan.barani.core.model.News
@@ -48,9 +48,11 @@ class ReactorViewModel(
     override fun getTopHeadlineNews() {
         startTopHeadlinesNewsTimer()
 
-        newsRepository.getTopHeadlineNews(countryCode = US_COUNTRY_CODE, category = HEALTH_CATEGORY)
+        newsRepository.getTopHeadlineNews(
+            countryCode = US_COUNTRY_CODE,
+            category = HEALTH_CATEGORY,
+        )
             .subscribeOn(Schedulers.boundedElastic())
-            .publishOn(Schedulers.single())
             .doOnSubscribe {
                 isLoading.value = true
             }
@@ -60,8 +62,9 @@ class ReactorViewModel(
             }
             .doOnSuccess { isLocalNews.value = false }
             .doOnError { throwable ->
-                message.value = context.getString(R.string.news_error)
-                Log.e(LOG_TAG, "Could not fetch news", throwable)
+                message.value = context.getString(
+                    R.string.news_error
+                )
             }
             .subscribe()
             .also {
@@ -96,7 +99,6 @@ class ReactorViewModel(
                     }
                 }
             }
-            .publishOn(Schedulers.single())
             .doOnSubscribe { isLoading.value = true }
             .subscribe({}, {
                 handleTopHeadlineNewsLocalError(it)

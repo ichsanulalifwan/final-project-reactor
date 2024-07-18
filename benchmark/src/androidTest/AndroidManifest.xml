@@ -8,6 +8,11 @@
       In a com.android.library project, this flag must be disabled from this
       manifest, as it is not possible to override this flag from Gradle.
     -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:remove="android:maxSdkVersion"
+        tools:ignore="ScopedStorage" />
 <!--    <application-->
 <!--        android:debuggable="false"-->
 <!--        tools:ignore="HardcodedDebugMode"-->

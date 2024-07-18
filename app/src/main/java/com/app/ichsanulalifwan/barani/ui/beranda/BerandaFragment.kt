@@ -86,6 +86,15 @@ class BerandaFragment : Fragment() {
                     }
                 }
             }
+
+            initGarbageCollector()
+        }
+    }
+
+    private fun initGarbageCollector() {
+        binding.icCategory.setOnClickListener {
+            Runtime.getRuntime().gc()
+            System.gc()
         }
     }
 

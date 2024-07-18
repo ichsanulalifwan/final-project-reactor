@@ -53,8 +53,6 @@ buildscript {
         sonaqube_version = '3.2.0'
 
         // RxJava
-        rxjava_version = '2.2.21'
-        rxandroid_version = '2.1.1'
         reactivestreams_version = '2.6.2'
 
         // Reactor

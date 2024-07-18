@@ -1,4 +1,4 @@
-package com.app.ichsanulalifwan.barani.core.data.location.reactor
+package com.app.ichsanulalifwan.barani.core.data.location
 
 import android.annotation.SuppressLint
 import android.location.Location

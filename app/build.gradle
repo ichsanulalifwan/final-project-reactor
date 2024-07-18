@@ -79,8 +79,8 @@ dependencies {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "FinalProject"
-        property "sonar.projectName", "FinalProject"
+        property "sonar.projectKey", "FinalProjectReactor"
+        property "sonar.projectName", "FinalProjectReactor"
         property "sonar.host.url", "http://localhost:9000"
         property "sonar.scm.disabled", true
         property "sonar.projectBaseDir", "$projectDir/.."

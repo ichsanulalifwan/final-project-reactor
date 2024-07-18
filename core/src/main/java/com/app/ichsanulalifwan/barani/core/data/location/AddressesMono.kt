@@ -1,4 +1,4 @@
-package com.app.ichsanulalifwan.barani.core.data.location.reactor
+package com.app.ichsanulalifwan.barani.core.data.location
 
 import android.location.Address
 import android.location.Location

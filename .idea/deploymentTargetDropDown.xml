@@ -2,13 +2,28 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="Barani-App.FinalProjectRxJava.app">
+        <State />
+      </entry>
+      <entry key="FinalProjectReactor.FinalProjectRxJava.app">
+        <State />
+      </entry>
+      <entry key="FinalProjectReactor.app">
+        <State />
+      </entry>
       <entry key="FinalProjectRxJava.app">
         <State />
       </entry>
-      <entry key="RxJavaDatabaseBenchmark">
+      <entry key="Project.FinalProjectReactor.app">
         <State />
       </entry>
-      <entry key="RxJavaIntegrationBenchmark">
+      <entry key="ReactorDatabaseBenchmark">
+        <State />
+      </entry>
+      <entry key="ReactorIntegrationBenchmark">
+        <State />
+      </entry>
+      <entry key="ReactorNetworkBenchmark">
         <State />
       </entry>
       <entry key="RxJavaNetworkBenchmark">
@@ -18,12 +33,6 @@
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="fetchNewsSingleRequestRxJava()">
-        <State />
-      </entry>
-      <entry key="integration1()">
         <State />
       </entry>
     </value>
